@@ -1,0 +1,68 @@
+* {
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto Mono', sans-serif;
+}
+body {
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("img/background.jpg");
+  background-size: cover;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  color: gray;
+}
+main {margin: 30px;}
+h1 {
+  color: #206eaa;
+  font-size: 30px;
+  margin: 30px;
+}
+textarea, input, button {
+  display: block;
+  margin: 10px 0;
+  padding: 10px;
+  font-size: 15px;
+}
+textarea, input {
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 1px solid black;
+  color: white;
+  width: 100%;
+  resize: none;
+}
+#text {height: 150px;}
+#bReplaceOuter {
+  display: block;
+}
+#bReplace {
+  background-color: rgba(0, 0, 100, 0.6);
+  border: 1px solid black;
+  border-radius: 4px;
+  color: gray;
+  padding: 10px 30px;
+  margin: 10px 20px;
+  display: inline;
+  transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
+}
+#bReplaceOuter::before, #bReplaceOuter::after {
+  content: '';
+  display: inline-block;
+  position: relative;
+  width: calc(100% / 2 - 100px);
+  height: 1px;
+  background-color: darkgray;
+}
+#bReplace:hover {
+  cursor: pointer;
+  background-color: rgb(0, 0, 100);
+  color: white;
+}
+#output {
+  background-color: rgba(0, 0, 100, 0.5);
+  border: none;
+  border-left: 3px solid blue;
+  margin-left: 20px;
+  margin-right: 20px;
+  width: calc(100% - 48px);
+  display: none;
+}
