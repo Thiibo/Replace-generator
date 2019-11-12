@@ -8,7 +8,22 @@
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
   </head>
   <body>
-    <h1>Replace generator</h1>
+    <header>
+      <h1>Replace generator</h1>
+      <form id="settings">
+        <input id="repeat" type="checkbox">
+        <label for="repeat">Repeat</label>
+        <input id="repeatX" type="number">
+      </form>
+      <a id="info">🛈</a>
+      <div id="infoPanel">
+        <p>
+          Use <span class="highlight">\n</span> to use a new line;<br>
+          Use <span class="highlight">\i</span> to write the current number of iterations.
+          <span id="credits">Created by <a id="author" href="https://thiibo.github.io">Thiibo</a></span>
+        </p>
+      </div>
+    </header>
     <main>
       <form id="input">
         <label for="text">Text:</label>
