@@ -8,36 +8,61 @@
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
   </head>
   <body>
-    <header>
-      <h1>Replace generator</h1>
-      <form id="settings">
-        <input id="repeat" type="checkbox">
-        <label for="repeat">Repeat</label>
-        <input id="repeatX" type="number">
-      </form>
-      <a id="info">🛈</a>
-      <div id="infoPanel">
-        <p>
-          Use <span class="highlight">\n</span> to use a new line;<br>
-          Use <span class="highlight">\i</span> to write the current number of iterations.
-          <span id="credits">Created by <a id="author" href="https://thiibo.github.io">Thiibo</a></span>
-        </p>
-      </div>
-    </header>
-    <main>
-      <form id="input">
-        <label for="text">Text:</label>
-        <textarea id="text"></textarea>
-        <label for="replaceText">Replace:</label>
-        <input id="replaceText" type="text">
-        <label for="replacementText">With:</label>
-        <input id="replacementText" type="text">
-        <div id="bReplaceOuter">
-          <button id="bReplace" type="button">Replace</button>
+    <div id="listsPanel">
+      <h2>Lists</h2>
+      <ul id="lists">
+        <li class="selected">\u</li>
+        <li>\v</li>
+        <li>\w</li>
+      </ul>
+      <div id="list">
+        <div id="listNumbering">
+          <pre class="listNumber">1</pre>
         </div>
-        <textarea id="output"></textarea>
-      </form>
-    </main>
+        <div id="listItems">
+          <pre class="listItem" contenteditable="true">hi</pre>
+        </div>
+      </div>
+    </div>
+    <div id="page">
+      <header>
+        <h1>Replace generator</h1>
+        <form id="settings">
+          <input id="repeat" type="checkbox">
+          <label for="repeat">Repeat</label>
+          <div id="repeatSettings">
+            <input id="repeatX" type="number">
+            <label for="repeatInbetween">Write in-between:</label>
+            <input id="repeatInbetween" type="text">
+          </div>
+        </form>
+        <a id="info">🛈</a>
+        <div id="infoPanel">
+          <p>
+            Use <span class="highlight">\n</span> to write a new line.<br>
+            Use <span class="highlight">\i</span> to write the the current iteration number.<br>
+            Use <span class="highlight">\c</span> to write the closed counter value. This value increases every time '\c' is called and will reset every new iteration.<br>
+            Use <span class="highlight">\o</span> to write the open counter value. This value increases every time '\o' is called and will NEVER reset.<br>
+            Use <span class="highlight">\\</span> to write '\' (thus escaping the special cases).<br>
+            <span id="credits">Created by <a id="author" href="https://thiibo.github.io">Thiibo</a></span>
+          </p>
+        </div>
+      </header>
+      <main>
+        <form id="input">
+          <label for="text">Text:</label>
+          <textarea id="text"></textarea>
+          <label for="replaceText">Replace:</label>
+          <input id="replaceText" type="text">
+          <label for="replacementText">With:</label>
+          <input id="replacementText" type="text">
+          <div id="bReplaceOuter">
+            <button id="bReplace" type="button">Replace</button>
+          </div>
+          <textarea id="output"></textarea>
+        </form>
+      </main>
+    </div>
     <script type="text/javascript" src="app.js"></script>
   </body>
 </html>
