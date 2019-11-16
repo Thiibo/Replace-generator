@@ -5,29 +5,32 @@
     <title>Replace generator</title>
     <link rel="stylesheet" href="master.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js" type="text/javascript"></script>
   </head>
   <body>
     <div id="listsPanel">
-      <h2>Lists</h2>
+      <div id="listsPanelHeader">
+        <button id="listsInfo" type="button">🛈</button>
+        <h2>Lists</h2>
+        <button id="listsPanelClose" type="button">×</button>
+      </div>
       <ul id="lists">
         <li class="selected">\u</li>
         <li>\v</li>
         <li>\w</li>
       </ul>
       <div id="list">
-        <div id="listNumbering">
-          <pre class="listNumber">1</pre>
+        <div id="listContentOuter">
+          <ul id="listContent"></ul>
         </div>
-        <div id="listItems">
-          <pre class="listItem" contenteditable="true">hi</pre>
-        </div>
+        <button id="listAddItem" type="button">+</button>
       </div>
     </div>
     <div id="page">
       <header>
         <h1>Replace generator</h1>
         <form id="settings">
+          <button id="listsPanelOpen" type="button">Open lists</button>
           <input id="repeat" type="checkbox">
           <label for="repeat">Repeat</label>
           <div id="repeatSettings">

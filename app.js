@@ -1,49 +1,89 @@
-function updateListNumbering() {
-  let l = $("#listNumbering").children()
-  for (let i = 1; i < l.length + 1; i++) {
-    l[i-1].innerHTML = i;
+Array.prototype.insert = function ( index, item ) {this.splice( index, 0, item );};
+Array.prototype.pop = function ( index ) {this.splice( index, 1 );};
+let lists = [[""], [""], [""]];
+let listOpen = 0;
+
+function loadList(l) {
+  $("#listContent").html("");
+  for (let i = 0; i < lists[l].length; i++) {
+    $("#listContent").append(
+      $('<li/>', {"class": "listItem"}).append(
+        $('<label/>', {"for": "listValue-" + i, "class": "listValueLabel"}).append(i + ":")
+      ).append(
+        $('<input/>', {"id": "listValue-" + i, "class": "listValue", "type": "text"}).val(lists[l][i])
+      ).append(
+        $('<button/>', {"class": "listValueDelete"}).append("×")
+      )
+    );
   }
 }
 
 $(document).ready(function() {
-  let listOpen = 0;
+  $("#listsPanelClose").click(function() {
+    $("#listsPanel").animate({left: "-400px", opacity: 0}, 600);
+  });
   $("#lists li").click(function() {
     $("#lists li").removeClass("selected");
     $(this).addClass("selected");
     listOpen = $(this).index();
+    loadList(listOpen);
   });
-  $("body").on("keypress", ".listItem", function(e) {
+  $("#listAddItem").click(function() {
+    let n = lists[listOpen].length;
+    $("#listContent").append(
+      $('<li/>', {"class": "listItem"}).append(
+        $('<label/>', {"for": "listValue-" + n, "class": "listValueLabel"}).append(n + ":")
+      ).append(
+        $('<input/>', {"id": "listValue-" + n, "class": "listValue", "type": "text"}).val(lists[listOpen][n])
+      ).append(
+        $('<button/>', {"class": "listValueDelete"}).append("×")
+      )
+    );
+    lists[listOpen].push("");
+    $("#listContent :last-child .listValue").focus();
+  });
+  $("body").on('change', '.listValue', function() {
+    lists[listOpen][$(this).parent().index()] = $(this).val();
+  });
+  $("body").on('keypress', '.listValue', function(e) {
     let key = e.keyCode || e.charCode;
-    let sel = window.getSelection();
-    if(key == 13) {
-      let el = '<pre class="listItem" contenteditable="true">' + $(this).html().substring(sel.anchorOffset, $(this).html().length) + '</pre>';
-      $(this).after(el);
-      $(this).html($(this).html().substring(0, sel.anchorOffset));
-      $(this).next().focus();
-      el = '<pre class="listNumber">' + ($(this).index() + 2) + '</pre>';
-      $("#listNumbering").children().eq($(this).index()).after(el);
-      updateListNumbering();
-      return false;
+    if (key == 13) {
+      $("#listAddItem").click();
+      lists[listOpen].pop(-1);
+      lists[listOpen].insert($(this).parent().index() + 1, "");
+      for (let i = $(this).parent().index() + 1; i < lists[listOpen].length; i++) {
+        $("#listContent").children().eq(i).children().eq(1).val(lists[listOpen][i]);
+      }
+      $(this).parent().next().children().eq(1).focus();
+    }
+  });
+  $("body").on('keydown', '.listValue', function(e) {
+    let key = e.keyCode || e.charCode;
+    switch (key) {
+      case 38:
+        $(this).parent().prev().children().eq(1).focus();
+        break;
+      case 40:
+        $(this).parent().next().children().eq(1).focus();
+        break;
+      default:
+
+    }
+  });
+  $("body").on('click', '.listValueDelete', function() {
+    lists[listOpen].pop($(this).parent().index());
+    $(this).parent().remove();
+    if (lists[listOpen].length == 0) {
+      $("#listAddItem").click();
     } else {
-      return true;
+      for (let i = $(this).parent().index(); i < lists[listOpen].length; i++) {
+        $("#listContent").children().eq(i).children().eq(0).html(i + ":");
+      }
     }
   });
-  $("body").on("keydown", ".listItem", function(e) {
-    let key = e.keyCode || e.charCode;
-    let sel = window.getSelection();
-    if(key == 8 && sel.anchorOffset == 0 && sel.focusOffset == 0)  {
-      $("#listNumbering").children().eq($(this).index()).remove();
-      $(this).prev().focus();
-      console.log($(this).prev()[0]);
-      console.log($(this).prev().html().length);
-      let prevLen = $(this).prev().html() == "" ? 0 : $(this).prev().html().length - 2;
-      $(this).prev().html($(this).prev().html() + $(this).html());
-      $(this).prev().focus();
-      sel.collapse($(this).prev()[0], prevLen);
-      $(this).remove();
-      updateListNumbering();
-      return false;
-    }
+  $("#listsPanelOpen").click(function() {
+    $("#listsPanel").animate({left: "0", opacity: 1}, 400);
+    loadList(listOpen);
   });
 
   let _outputOpen = false;
