@@ -5,29 +5,55 @@
     <title>Replace generator</title>
     <link rel="stylesheet" href="master.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.js"></script>
   </head>
   <body>
+    <div id="blackFadePage" class="blackFade"></div>
     <div id="listsPanel">
-      <h2>Lists</h2>
+      <div id="blackFadeListsPanel" class="blackFade">
+        <div class="alert">
+          <h3>Are you sure you want to change the list to a function?</h3>
+          <button class="bGreen" type="button">Confirm</button>
+          <button class="bRed" type="button">Cancel</button>
+        </div>
+      </div>
+      <div id="listsPanelHeader">
+        <button id="bListsPanelMore">
+          <div id="bListsPanelMoreInner">
+            <div id="bListsPanelMoreLineA"></div>
+            <div id="bListsPanelMoreLineB"></div>
+          </div>
+        </button>
+        <h2>Lists</h2>
+        <button id="listsPanelClose" type="button">×</button>
+      </div>
+      <ul id="listsPanelMore">
+        <li id="bListsImport">Import</li>
+        <li id="bListsExport"><a id="listsExportLink">Export</a></li>
+        <li id="bListsInfo">🛈 Info</li>
+        <!-- DEVELOPING: <li id="bListsChangeType">Function</li> -->
+      </ul>
+      <input class="hidden" id="bListsImportRef" type="file">
       <ul id="lists">
         <li class="selected">\u</li>
         <li>\v</li>
         <li>\w</li>
+        <li>\x</li>
+        <li>\y</li>
+        <li>\z</li>
       </ul>
       <div id="list">
-        <div id="listNumbering">
-          <pre class="listNumber">1</pre>
+        <div id="listContentOuter">
+          <ul id="listContent"></ul>
         </div>
-        <div id="listItems">
-          <pre class="listItem" contenteditable="true">hi</pre>
-        </div>
+        <button id="listAddItem" type="button">+</button>
       </div>
     </div>
     <div id="page">
       <header>
         <h1>Replace generator</h1>
         <form id="settings">
+          <button id="listsPanelOpen" type="button">Open lists</button>
           <input id="repeat" type="checkbox">
           <label for="repeat">Repeat</label>
           <div id="repeatSettings">
@@ -43,6 +69,8 @@
             Use <span class="highlight">\i</span> to write the the current iteration number.<br>
             Use <span class="highlight">\c</span> to write the closed counter value. This value increases every time '\c' is called and will reset every new iteration.<br>
             Use <span class="highlight">\o</span> to write the open counter value. This value increases every time '\o' is called and will NEVER reset.<br>
+            Use <span class="highlight">\u(n)</span> to <span class="highlight">\z(n)</span> to write a value from a list. Replace <span class="highlight">n</span> by the item position in the list.<br>
+            Use <span class="highlight">\m(e)</span> to evaluate a math expression. Replace <span class="highlight">e</span> by that expression. Functions are not allowed.<br>
             Use <span class="highlight">\\</span> to write '\' (thus escaping the special cases).<br>
             <span id="credits">Created by <a id="author" href="https://thiibo.github.io">Thiibo</a></span>
           </p>
